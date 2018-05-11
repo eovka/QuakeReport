@@ -8,21 +8,21 @@
 
     <TextView
         android:id="@+id/magnitude_view"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         tools:text="7.5" />
 
     <TextView
         android:id="@+id/city_view"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         tools:text="San Francisco" />
 
     <TextView
         android:id="@+id/date_view"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         tools:text="Feb 2, 2016" />

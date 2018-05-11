@@ -1,6 +1,5 @@
 package com.example.android.quakereport;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,10 +10,9 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class QuakeAdapter extends ArrayAdapter<Quake> {
-    public QuakeAdapter(@NonNull Context context, int resource, @NonNull ArrayList<Quake> objects) {
+public class QuakeAdapter extends ArrayAdapter<Earthquake> {
+    public QuakeAdapter(@NonNull Context context, int resource, @NonNull ArrayList<Earthquake> objects) {
         super(context, resource, objects);
     }
 
@@ -41,10 +39,10 @@ public class QuakeAdapter extends ArrayAdapter<Quake> {
             holder = (ViewHolder) listItemView.getTag();
         }
 
-        Quake currentQuake = getItem(position);
+        Earthquake currentQuake = getItem(position);
         holder.magnitude.setText(String.valueOf(currentQuake.getMagnitude()));
         holder.location.setText(currentQuake.getLocation());
-        holder.date.setText(currentQuake.getDate());
+        holder.date.setText(String.valueOf(currentQuake.getDate()));
 
         return listItemView;
     }
