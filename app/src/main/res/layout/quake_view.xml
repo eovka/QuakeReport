@@ -14,13 +14,24 @@
         android:layout_weight="1"
         tools:text="7.5" />
 
-    <TextView
-        android:id="@+id/city_view"
+    <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
         android:layout_weight="1"
-        tools:text="San Francisco" />
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/offset_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="88 km N of" />
+
+        <TextView
+            android:id="@+id/primary_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="San Francisco" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="0dp"

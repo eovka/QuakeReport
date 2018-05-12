@@ -25,7 +25,8 @@ public class QuakeAdapter extends ArrayAdapter<Earthquake> {
 
         class ViewHolder {
             private TextView magnitude;
-            private TextView location;
+            private TextView offsetLocation;
+            private TextView primaryLocation;
             private TextView date;
             private TextView time;
         }
@@ -35,7 +36,8 @@ public class QuakeAdapter extends ArrayAdapter<Earthquake> {
             listItemView = LayoutInflater.from(getContext()).inflate(R.layout.quake_view, parent, false);
             holder = new ViewHolder();
             holder.magnitude = listItemView.findViewById(R.id.magnitude_view);
-            holder.location = listItemView.findViewById(R.id.city_view);
+            holder.offsetLocation = listItemView.findViewById(R.id.offset_location);
+            holder.primaryLocation = listItemView.findViewById(R.id.primary_location);
             holder.date = listItemView.findViewById(R.id.date_view);
             holder.time = listItemView.findViewById(R.id.time_view);
             listItemView.setTag(holder);
@@ -45,12 +47,26 @@ public class QuakeAdapter extends ArrayAdapter<Earthquake> {
 
         Earthquake currentQuake = getItem(position);
         holder.magnitude.setText(String.valueOf(currentQuake.getMagnitude()));
-        holder.location.setText(currentQuake.getLocation());
+
+        String location = currentQuake.getLocation();
+        String offset;
+        String primary;
+        if (location.contains("of ")) {
+            String[] parts = location.split("(?<=of )");
+            offset = parts[0];
+            primary = parts[1];
+        } else {
+            offset = "Near the";
+            primary = currentQuake.getLocation();
+        }
+        holder.offsetLocation.setText(offset);
+        holder.primaryLocation.setText(primary);
 
         Date dateObject = new Date(currentQuake.getDate());
         SimpleDateFormat dateFormatter = new SimpleDateFormat("DD.MM.yyyy");
         String dateToDisplay = dateFormatter.format(dateObject);
         holder.date.setText(dateToDisplay);
+
         SimpleDateFormat timeFormatter = new SimpleDateFormat("HH.mm");
         String formattedTime = timeFormatter.format(dateObject);
         holder.time.setText(formattedTime);
