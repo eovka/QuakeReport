@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class QuakeAdapter extends ArrayAdapter<Earthquake> {
+    private static final String LOCATION_SEPARATOR = " of ";
+
     public QuakeAdapter(@NonNull Context context, int resource, @NonNull ArrayList<Earthquake> objects) {
         super(context, resource, objects);
     }
@@ -51,12 +53,12 @@ public class QuakeAdapter extends ArrayAdapter<Earthquake> {
         String location = currentQuake.getLocation();
         String offset;
         String primary;
-        if (location.contains("of ")) {
-            String[] parts = location.split("(?<=of )");
-            offset = parts[0];
+        if (location.contains(LOCATION_SEPARATOR)) {
+            String[] parts = location.split(LOCATION_SEPARATOR);
+            offset = parts[0] + LOCATION_SEPARATOR;
             primary = parts[1];
         } else {
-            offset = "Near the";
+            offset = getContext().getString(R.string.near_the);
             primary = currentQuake.getLocation();
         }
         holder.offsetLocation.setText(offset);
