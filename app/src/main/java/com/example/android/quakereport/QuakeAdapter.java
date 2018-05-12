@@ -9,7 +9,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class QuakeAdapter extends ArrayAdapter<Earthquake> {
     public QuakeAdapter(@NonNull Context context, int resource, @NonNull ArrayList<Earthquake> objects) {
@@ -25,6 +27,7 @@ public class QuakeAdapter extends ArrayAdapter<Earthquake> {
             private TextView magnitude;
             private TextView location;
             private TextView date;
+            private TextView time;
         }
         ViewHolder holder;
 
@@ -34,6 +37,7 @@ public class QuakeAdapter extends ArrayAdapter<Earthquake> {
             holder.magnitude = listItemView.findViewById(R.id.magnitude_view);
             holder.location = listItemView.findViewById(R.id.city_view);
             holder.date = listItemView.findViewById(R.id.date_view);
+            holder.time = listItemView.findViewById(R.id.time_view);
             listItemView.setTag(holder);
         } else {
             holder = (ViewHolder) listItemView.getTag();
@@ -42,7 +46,14 @@ public class QuakeAdapter extends ArrayAdapter<Earthquake> {
         Earthquake currentQuake = getItem(position);
         holder.magnitude.setText(String.valueOf(currentQuake.getMagnitude()));
         holder.location.setText(currentQuake.getLocation());
-        holder.date.setText(String.valueOf(currentQuake.getDate()));
+
+        Date dateObject = new Date(currentQuake.getDate());
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("DD.MM.yyyy");
+        String dateToDisplay = dateFormatter.format(dateObject);
+        holder.date.setText(dateToDisplay);
+        SimpleDateFormat timeFormatter = new SimpleDateFormat("HH.mm");
+        String formattedTime = timeFormatter.format(dateObject);
+        holder.time.setText(formattedTime);
 
         return listItemView;
     }
