@@ -8,17 +8,22 @@
 
     <TextView
         android:id="@+id/magnitude_view"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/circle_size"
+        android:layout_height="@dimen/circle_size"
         android:layout_gravity="center_vertical"
-        android:layout_weight="1"
+        android:background="@drawable/magnitude_circle"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/magnitude_text"
         tools:text="7.5" />
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginStart="@dimen/standard_padding">
 
         <TextView
             android:id="@+id/offset_location"
