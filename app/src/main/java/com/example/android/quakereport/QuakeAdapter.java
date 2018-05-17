@@ -74,7 +74,7 @@ public class QuakeAdapter extends ArrayAdapter<Earthquake> {
         holder.primaryLocation.setText(primary);
 
         Date dateObject = new Date(currentQuake.getDate());
-        SimpleDateFormat dateFormatter = new SimpleDateFormat("DD.MM.yyyy");
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("dd.MM.yyyy");
         String dateToDisplay = dateFormatter.format(dateObject);
         holder.date.setText(dateToDisplay);
 
