@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,8 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderCallb
             "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&eventtype=earthquake&orderby=time&minmag=3&limit=100";
 
     private QuakeAdapter adapter;
+    ListView earthquakeListView;
+    TextView noEarthquakesText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,9 +29,13 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderCallb
         setContentView(R.layout.earthquake_activity);
 
         adapter = new QuakeAdapter(this, 0, new ArrayList<Earthquake>());
-        ListView earthquakeListView = findViewById(R.id.list);
+        earthquakeListView = findViewById(R.id.list);
         earthquakeListView.setAdapter(adapter);
         getLoaderManager().initLoader(0, null, this);
+
+        noEarthquakesText = findViewById(R.id.empty_view);
+        noEarthquakesText.setText(R.string.no_earthquakes);
+        earthquakeListView.setEmptyView(noEarthquakesText);
 
         earthquakeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -49,6 +56,7 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderCallb
 
     @Override
     public void onLoadFinished(Loader<List<Earthquake>> loader, List<Earthquake> earthquakes) {
+        noEarthquakesText.setText(R.string.no_earthquakes);
         // Clear the adapter of previous earthquake data
         adapter.clear();
 
