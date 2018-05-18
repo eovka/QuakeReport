@@ -1,8 +1,11 @@
 package com.example.android.quakereport;
 
 import android.app.LoaderManager.LoaderCallbacks;
+import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -23,19 +26,31 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderCallb
     private QuakeAdapter adapter;
     ListView earthquakeListView;
     TextView noEarthquakesText;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.earthquake_activity);
 
-        adapter = new QuakeAdapter(this, 0, new ArrayList<Earthquake>());
         earthquakeListView = findViewById(R.id.list);
-        earthquakeListView.setAdapter(adapter);
-        getLoaderManager().initLoader(0, null, this);
-
+        progressBar = findViewById(R.id.progress_bar);
         noEarthquakesText = findViewById(R.id.empty_view);
+        adapter = new QuakeAdapter(this, 0, new ArrayList<Earthquake>());
+        earthquakeListView.setAdapter(adapter);
         earthquakeListView.setEmptyView(noEarthquakesText);
+
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+        if (isConnected) {
+            getLoaderManager().initLoader(0, null, this);
+        } else {
+            progressBar.setVisibility(View.GONE);
+            noEarthquakesText.setText(R.string.no_internet);
+        }
 
         earthquakeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -65,7 +80,6 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderCallb
         if (earthquakes != null && !earthquakes.isEmpty()) {
             adapter.addAll(earthquakes);
         }
-        ProgressBar progressBar = findViewById(R.id.progress_bar);
         progressBar.setVisibility(View.GONE);
     }
 
