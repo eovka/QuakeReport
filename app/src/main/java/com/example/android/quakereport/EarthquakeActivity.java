@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -34,7 +35,6 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderCallb
         getLoaderManager().initLoader(0, null, this);
 
         noEarthquakesText = findViewById(R.id.empty_view);
-        noEarthquakesText.setText(R.string.no_earthquakes);
         earthquakeListView.setEmptyView(noEarthquakesText);
 
         earthquakeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -65,6 +65,8 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderCallb
         if (earthquakes != null && !earthquakes.isEmpty()) {
             adapter.addAll(earthquakes);
         }
+        ProgressBar progressBar = findViewById(R.id.progress_bar);
+        progressBar.setVisibility(View.GONE);
     }
 
     @Override
